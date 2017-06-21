@@ -9,7 +9,7 @@ from pyspark.streaming.kafka import KafkaUtils
 
 def storeToRedis(rdd):
     """Decrement flight availability"""
-    conn = redis.StrictRedis(host='ec2-52-3-221-45.compute-1.amazonaws.com', port=6379, encoding='utf-8')
+    conn = redis.StrictRedis(host='xxxxxxxxxxxxxxxxxxx', passsword='xxxxxxxxxxxxxxxxx', port=6379, encoding='utf-8')
     for i in rdd.collect():
         conn.hincrby('flight:' + i[0],'availability',int(i[1]) * -1)
 
