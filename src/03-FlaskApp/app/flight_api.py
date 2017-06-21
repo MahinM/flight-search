@@ -2,7 +2,7 @@ import redis
 import datetime
 from dateutil import parser
 
-conn = redis.Redis(host='ec2-52-3-221-45.compute-1.amazonaws.com', port=6379, encoding='utf-8')
+conn = redis.Redis(host='xxxxxxxxxxxxxxx', password='xxxxxxxxxxxxx', port=6379, encoding='utf-8')
 seconds_in_day = 24 * 60 * 60
 seconds_in_hour = 60 * 60
 
