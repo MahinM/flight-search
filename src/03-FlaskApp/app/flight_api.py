@@ -10,33 +10,6 @@ def unix_time_millis(dt):
     epoch = datetime.datetime.utcfromtimestamp(0)
     return (dt - epoch).total_seconds() 
 
-
-
-def get_direct_flights(origin, destination,travel_date):
-	if conn.exists('flights:' + origin.upper() + ':' + destination.upper()):
-		start_time = unix_time_millis(travel_date)
-		end_time = start_time + seconds_in_day
-
-		conn.zinterstore('flights_by_route',['flights:' + origin + ":" + destination,'departure:'],aggregate='max')
-
-
-		distance = conn.get('distance:' + origin + ':' + destination)
-
-		#Assemble structure to return
-		flight_list = []
-		for f in conn.zrangebyscore('flights_by_route', start_time, end_time, 
-			withscores=True):
-			item = conn.hgetall(f[0])
-			if int(item[b'availability']) > 0:
-				item['Origin'] = origin
-				item['Destination'] = destination
-				item['Distance'] = distance
-				item['time'] = f[1]
-				item['flight'] = str(f[0],'utf-8').split(':')[1]
-				flight_list.append(item)
-		return flight_list
-
-
 def get_flights(origin,destination,travel_date):
    results =  {}
    direct_flight_list = []
